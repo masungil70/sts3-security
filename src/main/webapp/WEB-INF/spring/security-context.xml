@@ -8,27 +8,24 @@
     http://www.springframework.org/schema/beans 
     http://www.springframework.org/schema/beans/spring-beans.xsd">
     
-    <bean id="customAccessDenied" class="kr.or.kosa.security.handler.CustomAccessDeniedHandler"></bean>
-    <bean id="customLoginSuccess" class="kr.or.kosa.security.handler.CustomLoginSuccessHandler"></bean>
+    <bean id="customAccessDenied" class="kr.or.kosa.security.handler.CustomAccessDeniedHandler"/>
+    <bean id="customLoginSuccess" class="kr.or.kosa.security.handler.CustomLoginSuccessHandler"/>
     <bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
-    
+    <bean id="userDetailsService" class="kr.or.kosa.security.auth.PrincipalDetailsService"/>
+      
     <security:http>
       <security:intercept-url pattern="/sample/all" access="permitAll"/>
+      <security:intercept-url pattern="/auth/**" access="permitAll"/>
       <security:intercept-url pattern="/sample/member" access="hasRole('ROLE_MEMBER')" />
       <security:intercept-url pattern="/sample/admin"  access="hasRole('ROLE_ADMIN')"/>
       <security:form-login login-page="/customLogin"  authentication-success-handler-ref="customLoginSuccess"/>
+      <security:logout logout-url="/logout" logout-success-url="/" invalidate-session="true" delete-cookies="JSESSIONID" />
       <security:access-denied-handler ref="customAccessDenied"/>     
     </security:http>
   
     <security:authentication-manager>
-      <security:authentication-provider>
+      <security:authentication-provider user-service-ref="userDetailsService">
           <security:password-encoder ref="passwordEncoder"/>
-          <security:user-service>
-          <!--  고정된  사용자  설정 -->
-              <security:user name="member" password="$2a$10$.gxEMszT3HjYB5jfPCCqvOF0cUbQOY2wZwiyrROYDhUZw4.54680." authorities="ROLE_MEMBER" />
-              <security:user name="admin" password="$2a$10$URU7UzMQPZN4Sk6ugndDf.p1WU8CP.rI8D4pDFzws7wpHYxdZCPtq" authorities="ROLE_MEMBER,ROLE_ADMIN" />
-          </security:user-service>
       </security:authentication-provider>
-    </security:authentication-manager>
-  
+    </security:authentication-manager>  
 </beans>

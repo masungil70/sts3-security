@@ -10,18 +10,19 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Controller
 public class IndexController {
-	
+
 	@Autowired
 	private PasswordEncoder passwordEncoder;
-	
+
 	@GetMapping("/")
 	public String index() {
+
 		
-		System.out.println("member 비번 : " + passwordEncoder.encode("1234"));
-		System.out.println("admin 비번 : " + passwordEncoder.encode("1234"));
-		
-		return "index";
+		  System.out.println("member 비번 : " + passwordEncoder.encode("1234"));
+		  System.out.println("admin 비번 : " + passwordEncoder.encode("1234"));
+		  System.out.println("admin 비번 : " + passwordEncoder.encode("passwd"));
+		  
+		  return "index";
 	}
 
-	
 }

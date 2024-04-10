@@ -15,7 +15,7 @@ import kr.or.kosa.mapper.MemberDAO;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class CustomLoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
+public class CustomLogoutSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 	
 	@Autowired
 	private MemberDAO memberDAO;
@@ -29,9 +29,9 @@ public class CustomLoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
 		
 		System.out.println("authentication ->" + authentication);
 		
-		setDefaultTargetUrl("/sample/member");
+		setDefaultTargetUrl("/security/");
         
-  	super.onAuthenticationSuccess(request, response, authentication);
+		super.onAuthenticationSuccess(request, response, authentication);
         
 	}
 
