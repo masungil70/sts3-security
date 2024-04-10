@@ -8,8 +8,15 @@
     http://www.springframework.org/schema/beans 
     http://www.springframework.org/schema/beans/spring-beans.xsd">
     
+    <bean id="customAccessDenied" class="kr.or.kosa.security.handler.CustomAccessDeniedHandler"></bean>
+    <bean id="customLoginSuccess" class="kr.or.kosa.security.handler.CustomLoginSuccessHandler"></bean>
+    
     <security:http>
-      <security:form-login />
+      <security:intercept-url pattern="/sample/all" access="permitAll"/>
+      <security:intercept-url pattern="/sample/member" access="hasRole('ROLE_MEMBER')" />
+      <security:intercept-url pattern="/sample/admin"  access="hasRole('ROLE_ADMIN')"/>
+      <security:form-login login-page="/customLogin"  authentication-success-handler-ref="customLoginSuccess"/>
+      <security:access-denied-handler ref="customAccessDenied"/>     
     </security:http>
   
     <security:authentication-manager>
