@@ -12,7 +12,7 @@
   <h2>${error}</h2>
   <h2>${logout}</h2>
   
-  <form action="/security/login" method="post">
+  <form action="/login" method="post">
     <div>
       <input type="text" name="username" value="admin"/>
     </div>
